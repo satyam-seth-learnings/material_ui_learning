@@ -4,9 +4,22 @@ import AddIcon from '@material-ui/icons/Add';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import EditIcon from '@material-ui/icons/Edit';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <>
       {/* Button */}
@@ -41,9 +54,9 @@ function App() {
       <IconButton variant="contained" color="secondary">
         <DeleteIcon />
       </IconButton>
-      
+
       <h1>Custom Button</h1>
-      <Button variant="contained" color="secondary" style={{backgroundColor:"blue"}}>Custom</Button>
+      <Button variant="contained" color="secondary" style={{ backgroundColor: "blue" }}>Custom</Button>
 
       {/* Button Group */}
       <h3>Button Group</h3>
@@ -62,20 +75,59 @@ function App() {
 
       {/* Floating Action Button */}
       <h1>Floating Action Button</h1>
-      <Fab color="primary"><AddIcon/></Fab>
-      <Fab color="secondary"><EditIcon/></Fab>
-      <Fab variant="extended"><NavigationIcon/>Navigate</Fab>
-      <Fab disabled><FavoriteIcon/></Fab>
+      <Fab color="primary"><AddIcon /></Fab>
+      <Fab color="secondary"><EditIcon /></Fab>
+      <Fab variant="extended"><NavigationIcon />Navigate</Fab>
+      <Fab disabled><FavoriteIcon /></Fab>
 
 
       {/* Checkbox */}
-      <h3>Checkbox</h3>
+      <h1>Checkbox</h1>
       <Checkbox />
       <Checkbox checked="true" />
       <Checkbox checked="true" color="primary" />
       <Checkbox defaultChecked indeterminate />
       <FormControlLabel control={<Checkbox name="checkedA" />} label="Secondary" />
       <FormControlLabel control={<Checkbox checked="true" name="checkedA" />} label="Secondary" />
+
+      {/* Date / Time */}
+      <h1>Date and Time</h1>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          disableToolbar
+          variant="inline"
+          format="MM/dd/yyyy"
+          margin="normal"
+          id="date-picker-inline"
+          label="Date picker inline"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+        <KeyboardDatePicker
+          margin="normal"
+          id="date-picker-dialog"
+          label="Date picker dialog"
+          format="MM/dd/yyyy"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+        <KeyboardTimePicker
+          margin="normal"
+          id="time-picker"
+          label="Time picker"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
+          }}
+        />
+    </MuiPickersUtilsProvider>
     </>
   );
 }
